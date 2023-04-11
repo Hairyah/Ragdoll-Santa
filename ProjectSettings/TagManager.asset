@@ -3,7 +3,15 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - stealingpoint
+  - sittingpoint
+  - pickuppoint
+  - waypoint
+  - Ground
+  - Wall
+  - TriggerEnter
+  - TriggerExit
   layers:
   - Default
   - TransparentFX
