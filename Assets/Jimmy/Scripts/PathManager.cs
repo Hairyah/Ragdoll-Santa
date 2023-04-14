@@ -27,6 +27,7 @@ public class PathManager : MonoBehaviour
     public int index = 0;
     [SerializeField] Transform[] destinations;
     private Vector3[] destinationsPos;
+    private bool hasDesinationChanged = false;
 
     NavMeshAgent navMeshAgent;
     private GameObject player;
@@ -60,59 +61,65 @@ public class PathManager : MonoBehaviour
         }
         else
         {
+            SetNewDestination(index);
+
             if (transform.position == navMeshAgent.destination)
             {
-                switch (transform.name)
+                if (!hasDesinationChanged)
                 {
-                    case "Man":
+                    switch (transform.name)
+                    {
+                        case "Man":
 
-                        switch (index)
-                        {
-                            case 0:
-                                StartCoroutine(WaitingPause(0));
-                                break;
+                            switch (index)
+                            {
+                                case 0:
+                                    StartCoroutine(WaitingPause(20.5f)); //Batterie ===> 20.5f
+                                    break;
 
-                            case 1:
-                                StartCoroutine(WaitingPause(0));
-                                break;
+                                case 1:
+                                    StartCoroutine(WaitingPause(20f)); //Sofa ===> 20f
+                                    break;
 
-                            case 2:
-                                StartCoroutine(WaitingPause(0));
-                                break;
-                        }
+                                case 2:
+                                    StartCoroutine(WaitingPause(40f)); //Plaque de cuisson ===> 40f
+                                    break;
 
-                        break;
+                                case 4:
+                                    StartCoroutine(WaitingPause(19.5f)); //Arcade ===> 19.5f
+                                    break;
+                            }
 
-                    case "Woman":
+                            break;
 
-                        switch (index)
-                        {
-                            case 0:
-                                StartCoroutine(WaitingPause(0));
-                                break;
+                        case "Woman":
 
-                            case 1:
-                                StartCoroutine(WaitingPause(0));
-                                break;
+                            switch (index)
+                            {
+                                case 0:
+                                    StartCoroutine(WaitingPause(2f)); //Frigo ===> 20f
+                                    break;
 
-                            case 2:
-                                StartCoroutine(WaitingPause(0));
-                                break;
-                        }
+                                case 1:
+                                    StartCoroutine(WaitingPause(2f)); //Fauteuil ===> 20f
+                                    break;
 
-                        break;
+                                case 2:
+                                    StartCoroutine(WaitingPause(2f)); //Tableau 1 ===> 18f
+                                    break;
+
+                                case 3:
+                                    StartCoroutine(WaitingPause(2f)); //Tableau 2 ===> 18f
+                                    break;
+
+                                case 4:
+                                    StartCoroutine(WaitingPause(2f)); //Toilettes ===> 15.5f
+                                    break;
+                            }
+
+                            break;
+                    }
                 }
-
-                if (index == destinations.Length - 1)
-                {
-                    index = 0;
-                }
-                else
-                {
-                    ++index;
-                }
-                
-                SetNewDestination(index);
             }
         }
     }
@@ -162,6 +169,32 @@ public class PathManager : MonoBehaviour
 
     IEnumerator WaitingPause(float time)
     {
+        hasDesinationChanged = true;
+        if (transform.name == "Woman")
+        {
+            Debug.Log("PauseDestination = " + hasDesinationChanged);
+        }
         yield return new WaitForSecondsRealtime(time);
+        if (index == destinations.Length - 1)
+        {
+            index = 0;
+        }
+        else
+        {
+            ++index;
+        }
+
+        SetNewDestination(index);
+        StartCoroutine(WaitingResetBool(hasDesinationChanged, false, 2f));
+    }
+
+    IEnumerator WaitingResetBool(bool boolean, bool status, float time)
+    {
+        yield return new WaitForSecondsRealtime(time);
+        boolean = status;
+        if (transform.name == "Woman")
+        {
+            Debug.Log("PauseBool = " + hasDesinationChanged);
+        }
     }
 }

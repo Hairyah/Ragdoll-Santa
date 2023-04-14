@@ -16,16 +16,17 @@ public class TriggerManager : MonoBehaviour
         if (other.gameObject.tag == "Player" && transform.gameObject.tag == "TriggerEnter")
         {
             pathManager.hasSpotted = true;
-            Debug.Log("Trigger Enter");
+            Debug.Log(transform.parent.name + " Trigger Enter");
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
+        //Debug.Log(other.gameObject.name);
         if (other.gameObject.tag == "Player" && transform.gameObject.tag == "TriggerExit")
         {
             pathManager.hasSpotted = false;
-            Debug.Log("Trigger Exit");
+            Debug.Log(transform.parent.name + " Trigger Exit");
         }
     }
 }
