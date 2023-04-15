@@ -10,38 +10,57 @@ public class CharacterScript : MonoBehaviour
     [SerializeField] private float playerSpeed = 5;
     [SerializeField] private GameObject playerObject;
     [SerializeField] private float turnSpeed = 360;
-    private bool canJump = false;
+    public bool canJump = true;
+    public float maxRotation = 0;
+    private Vector3 startPosition;
+    [SerializeField] private GameObject rotatePoint;
+
+    [SerializeField] private GameObject avant;
+    [SerializeField] private GameObject arriere;
+    [SerializeField] private GameObject gauche;
+    [SerializeField] private GameObject droit;
 
     [Header("Ragdoll Part")]
     [SerializeField] private Rigidbody brasDroit;
     [SerializeField] private Rigidbody brasGauche;
     [SerializeField] private Rigidbody centerMass;
+    [SerializeField] private Rigidbody head;
 
+    private void Start()
+    {
+        startPosition = transform.position;
+    }
 
     void Update()
     {
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump") && canJump)
         {
-            centerMass.AddForce(new Vector3(0, 10000, 0));
-            Debug.Log("JUMP");
+            canJump = false;
+            centerMass.AddForce(new Vector3(0, 7000, 0));
+            brasDroit.AddForce(new Vector3(0, 100, 0));
+            brasGauche.AddForce(new Vector3(0, 100, 0));
         }
 
         if (Input.GetButton("GrapDroit"))
         {
-            brasDroit.AddForce(new Vector3(15, 1, 1));
+            brasDroit.AddRelativeForce(new Vector3(15, 1, 1));
             Debug.Log("GRAPD");
         }
 
         if (Input.GetButton("GrapGauche"))
         {
-            brasGauche.AddForce(new Vector3(15, 1, 1));
+            brasGauche.AddRelativeForce(new Vector3(15, 1, 1));
             Debug.Log("GRAPG");
         }
 
-        //centerMass.AddForce(new Vector3(1, 20, 1));
+        head.AddForce(new Vector3(1, 20, 1));
 
-        GatherInput();
-        Look();
+        
+        if (canJump)
+        {
+            GatherInput();
+            Look();
+        }
     }
 
     private void FixedUpdate()
@@ -67,9 +86,44 @@ public class CharacterScript : MonoBehaviour
 
             var relative = (transform.position + skewedInput) - transform.position;
             var rot = Quaternion.LookRotation(relative, Vector3.up);
+            var euleurRot = rot.eulerAngles = new Vector3(rot.eulerAngles.x, rot.eulerAngles.y - 90, rot.eulerAngles.z);
+            rot = Quaternion.Euler(euleurRot);
 
-            //transform.rotation = Quaternion.RotateTowards(transform.rotation, rot, turnSpeed * Time.deltaTime);
+            /*if (Input.GetAxisRaw("Horizontal") == 1)
+            {
+                transform.LookAt(avant.transform, Vector3.up);
+                Debug.Log("ahahah");
+            }
+
+            if (Input.GetAxisRaw("Horizontal") == -1)
+            {
+                transform.LookAt(arriere.transform, Vector3.up);
+            }*/
+
+            var rotateGlobal = transform.eulerAngles;
+            var rotateLocal = playerObject.transform.eulerAngles;
+            rotateLocal.x = rotateLocal.x * 0;
+            rotateLocal.z = rotateLocal.z * 0;
+            
+            playerObject.transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, -90);
+            //rotatePoint.transform.position = playerObject.transform.position;
+
+            Debug.Log("Rotate : " + rotatePoint.transform.position);
+            Debug.Log("Pelvis : " + playerObject.transform.position);
+
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, rot, turnSpeed * Time.deltaTime);
         }
+
+        /*if (Input.GetKey(KeyCode.W))
+        {
+            transform.RotateAround(rotatePoint.transform.position, Vector3.up, 100 * Time.deltaTime);
+            Debug.Log("Rotate BORDEL");
+        }
+
+        if (Input.GetKey(KeyCode.C))
+        {
+            transform.RotateAround(rotatePoint.transform.position, Vector3.up, -100 * Time.deltaTime);
+        }*/
     }
 
     void Move()
