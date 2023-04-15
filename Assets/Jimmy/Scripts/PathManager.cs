@@ -6,42 +6,62 @@ using UnityEngine.AI;
 public class PathManager : MonoBehaviour
 {
     public bool hasSpotted = false;
+    public bool hasBeenChase = false;
 
     private Animator animator;
     public string isWalking = "isWalking";
     public string isRunning = "isRunning";
     public string isSitting = "isSitting";
-    public string isStandingSit = "isStandingSit";
-    public string isFallingFront = "isFallingFront";
-    public string isFallingBack = "isFallingBack";
-    public string isStandingBack = "isStandingBack";
-    public string isStandingFront = "isStandingFront";
-    public string isLaying = "isLaying";
+    public string isSitPlaying = "isSitPlaying";
+    public string isSitPointing = "isSitPointing";
+    public string isSitYelling = "isSitYelling";
+    public string isSitClaping = "isSitClaping";
+    public string isSitLaughing = "isSitLaughing";
     public string isOpening = "isOpening";
-    public string isClosing = "isClosing";
     public string isDrinking = "isDrinking";
-    public string isPraying = "isPraying";
+    public string isCooking = "isCooking";
+    public string isStandPointing = "isStandPointing";
+    public string isStandLooking = "isStandLooking";
     public string isPlaying = "isPlaying";
+
     public string isWoman = "isWoman";
 
+    public int indexFinal = 0;
     public int index = 0;
+    public bool hasReachedPoint = false;
     [SerializeField] Transform[] destinations;
-    private Vector3[] destinationsPos;
+    private Vector3[] destinationsFinalPos;
+    private Vector3[,] destinationsPointPos;
     private bool hasDesinationChanged = false;
+    private string hasDesinationChangedName = "hasDesinationChanged";
+    public GameObject rig;
+    private Vector3 euler;
 
-    NavMeshAgent navMeshAgent;
+    public NavMeshAgent navMeshAgent;
     private GameObject player;
 
     void Awake()
     {
         animator = transform.GetComponent<Animator>();
 
-        destinationsPos = new Vector3[destinations.Length];
+        destinationsFinalPos = new Vector3[destinations.Length];
+        destinationsPointPos = new Vector3[destinations.Length, 1];
 
         for (int i = 0; i < destinations.Length; ++i)
         {
-            //Debug.Log(destinations[i]);
-            destinationsPos[i] = new Vector3(destinations[i].position.x, destinations[i].position.y, destinations[i].position.z);
+            destinationsFinalPos[i] = new Vector3(destinations[i].position.x, destinations[i].position.y, destinations[i].position.z);
+            destinationsPointPos[i, 0] = new Vector3(destinations[i].GetChild(0).position.x, destinations[i].GetChild(0).position.y, destinations[i].GetChild(0).position.z);
+        }
+
+        switch (transform.name)
+        {
+            case "Man":
+                animator.SetBool(isWoman, false);
+                break;
+
+            case "Woman":
+                animator.SetBool(isWoman, true);
+                break;
         }
 
         navMeshAgent = transform.GetComponent<NavMeshAgent>();
@@ -50,7 +70,7 @@ public class PathManager : MonoBehaviour
 
     private void Start()
     {
-        SetNewDestination(0);
+
     }
 
     void Update()
@@ -58,143 +78,339 @@ public class PathManager : MonoBehaviour
         if (hasSpotted)
         {
             navMeshAgent.SetDestination(player.transform.position);
+            ResetAllBool();
         }
         else
         {
-            SetNewDestination(index);
-
-            if (transform.position == navMeshAgent.destination)
+            if (hasReachedPoint)
             {
-                if (!hasDesinationChanged)
+                SetNewDestination(index);
+                if (transform.position == navMeshAgent.destination)
                 {
-                    switch (transform.name)
+                    if (!hasDesinationChanged)
                     {
-                        case "Man":
-
-                            switch (index)
-                            {
-                                case 0:
-                                    StartCoroutine(WaitingPause(20.5f)); //Batterie ===> 20.5f
-                                    break;
-
-                                case 1:
-                                    StartCoroutine(WaitingPause(20f)); //Sofa ===> 20f
-                                    break;
-
-                                case 2:
-                                    StartCoroutine(WaitingPause(40f)); //Plaque de cuisson ===> 40f
-                                    break;
-
-                                case 4:
-                                    StartCoroutine(WaitingPause(19.5f)); //Arcade ===> 19.5f
-                                    break;
-                            }
-
-                            break;
-
-                        case "Woman":
-
-                            switch (index)
-                            {
-                                case 0:
-                                    StartCoroutine(WaitingPause(2f)); //Frigo ===> 20f
-                                    break;
-
-                                case 1:
-                                    StartCoroutine(WaitingPause(2f)); //Fauteuil ===> 20f
-                                    break;
-
-                                case 2:
-                                    StartCoroutine(WaitingPause(2f)); //Tableau 1 ===> 18f
-                                    break;
-
-                                case 3:
-                                    StartCoroutine(WaitingPause(2f)); //Tableau 2 ===> 18f
-                                    break;
-
-                                case 4:
-                                    StartCoroutine(WaitingPause(2f)); //Toilettes ===> 15.5f
-                                    break;
-                            }
-
-                            break;
+                        hasBeenChase = false;
+                        //Debug.Log("kjhfk");
+                        ResetAllBool();
+                        hasReachedPoint = true;
+                        SetAnimation();
                     }
                 }
             }
+            else
+            {
+                SetNewDestinationPoint(index);
+                if (transform.position == navMeshAgent.destination)
+                {
+                    hasBeenChase = false;
+                    //Debug.Log("kjhfk");
+                    hasReachedPoint = true;
+                    SetNewDestination(index);
+                }
+            }
+
+            
+        }
+    }
+
+    public void SetAnimation()
+    {
+        hasDesinationChanged = true;
+
+        switch (transform.name)
+        {
+            case "Man":
+
+                switch (index)
+                {
+                    case 0:
+                        //Batterie ===> 20.5f
+                        StartCoroutine(WaitingToSetNewDestination(20.5f));
+                        animator.SetBool(isSitting, true);
+                        animator.SetBool(isSitPlaying, true);
+                        StartCoroutine(SetBoolWithDelay(isSitting, 15f));
+                        StartCoroutine(SetBoolWithDelay(isSitPlaying, 15f));
+                        break;
+
+                    case 1:
+                        //Sofa ===> 20f
+                        StartCoroutine(WaitingToSetNewDestination(20f));
+                        animator.SetBool(isSitting, true);
+                        animator.SetBool(isSitPointing, true);
+                        StartCoroutine(SetBoolWithDelay(isSitPointing, 5f));
+                        StartCoroutine(SetBoolWithDelay(isSitYelling, 8f));
+                        StartCoroutine(SetBoolWithDelay(isSitYelling, 10f));
+                        StartCoroutine(SetBoolWithDelay(isSitPointing, 14f));
+                        StartCoroutine(SetBoolWithDelay(isSitPointing, 16f));
+                        StartCoroutine(SetBoolWithDelay(isSitting, 18f));
+                        break;
+
+                    case 2:
+                        //Plaque de cuisson ===> 40f
+                        StartCoroutine(WaitingToSetNewDestination(40f));
+                        animator.SetBool(isCooking, true);
+                        StartCoroutine(SetBoolWithDelay(isCooking, 30f));
+                        break;
+
+                    case 3:
+                        //Arcade ===> 19.5f
+                        StartCoroutine(WaitingToSetNewDestination(19.5f));
+                        animator.SetBool(isPlaying, true);
+                        StartCoroutine(SetBoolWithDelay(isPlaying, 18f));
+                        break;
+                }
+
+                break;
+
+            case "Woman":
+
+                switch (index)
+                {
+                    case 0:
+                        //Frigo ===> 20f
+                        StartCoroutine(WaitingToSetNewDestination(20f));
+                        animator.SetBool(isOpening, true);
+                        break;
+
+                    case 1:
+                        //Fauteuil ===> 20f
+                        StartCoroutine(WaitingToSetNewDestination(20f));
+                        animator.SetBool(isSitting, true);
+                        StartCoroutine(SetBoolWithDelay(isSitLaughing, true, 5f));
+                        StartCoroutine(SetBoolWithDelay(isSitLaughing, false, 15f));
+                        StartCoroutine(SetBoolWithDelay(isSitting, false, 16f));
+                        break;
+
+                    case 2:
+                        //Tableau 1 ===> 18f
+                        StartCoroutine(WaitingToSetNewDestination(18f));
+                        animator.SetBool(isStandPointing, true);
+                        StartCoroutine(SetBoolWithDelay(isStandPointing, 1f));
+                        StartCoroutine(SetBoolWithDelay(isStandLooking, 5f));
+                        StartCoroutine(SetBoolWithDelay(isStandLooking, 7f));
+                        StartCoroutine(SetBoolWithDelay(isStandPointing, 12f));
+                        StartCoroutine(SetBoolWithDelay(isStandPointing, 13.5f));
+                        break;
+
+                    case 3:
+                        //Tableau 2 ===> 18f
+                        StartCoroutine(WaitingToSetNewDestination(18f));
+                        animator.SetBool(isStandPointing, true);
+                        StartCoroutine(SetBoolWithDelay(isStandPointing, 1f));
+                        StartCoroutine(SetBoolWithDelay(isStandLooking, 5f));
+                        StartCoroutine(SetBoolWithDelay(isStandLooking, 7f));
+                        StartCoroutine(SetBoolWithDelay(isStandPointing, 12f));
+                        StartCoroutine(SetBoolWithDelay(isStandPointing, 13.5f));
+                        break;
+
+                    case 4:
+                        //Toilettes ===> 15.5f
+                        StartCoroutine(WaitingToSetNewDestination(15.5f));
+                        animator.SetBool(isSitting, true);
+                        StartCoroutine(SetBoolWithDelay(isSitting, 13f));
+                        break;
+                }
+
+                break;
         }
     }
 
     public void SetNewDestination(int index)
     {
-        navMeshAgent.SetDestination(destinationsPos[index]);
+        float distance = Vector3.Distance(transform.position, navMeshAgent.destination);
+
+        if (hasSpotted && animator.GetBool(isRunning) == false)
+        {
+            animator.SetBool(isWalking, false);
+            animator.SetBool(isRunning, true);
+        }
+
+        if (!hasSpotted && animator.GetBool(isWalking) == false && distance > 1)
+        {
+            animator.SetBool(isRunning, false);
+            animator.SetBool(isWalking, true);
+        }
+        else if (!hasSpotted && distance < 1)
+        {
+            animator.SetBool(isRunning, false);
+            animator.SetBool(isWalking, false);
+        }
+
+
+
+        navMeshAgent.SetDestination(destinationsFinalPos[index]);
     }
 
-    public int GetIndexOfTransformInArray(Transform transform, Transform[] array)
+    public void SetNewDestinationPoint(int index)
     {
-        int index = -1;
+        float distance = Vector3.Distance(transform.position, navMeshAgent.destination);
 
-        if (array.Length > 0)
+        if (hasSpotted && animator.GetBool(isRunning) == false)
         {
-            for (int i = 0; i < array.Length; ++i)
+            animator.SetBool(isWalking, false);
+            animator.SetBool(isRunning, true);
+        }
+
+        if (!hasSpotted && animator.GetBool(isWalking) == false)
+        {
+            animator.SetBool(isRunning, false);
+            animator.SetBool(isWalking, true);
+        }
+
+        navMeshAgent.SetDestination(destinationsPointPos[index, 0]);
+    }
+
+    IEnumerator WaitingToSetNewDestination(float time)
+    {
+        bool monGrosBool = false;
+        Debug.Log("hgl:jhh;hg");
+
+        for (int i = 0; i < time; ++i)
+        {
+            if (hasBeenChase)
             {
-                if (transform == array[i])
+                monGrosBool = true;
+                Debug.Log("reset // " + i);
+            }
+            yield return new WaitForSecondsRealtime(1);
+        }
+
+        if (!int.TryParse(string.Format("{0}", time), out int ignore))
+        {
+            yield return new WaitForSecondsRealtime(0.5f);
+        }
+        
+
+        if (!monGrosBool)
+        {
+            if (index == destinations.Length - 1)
+            {
+                index = 0;
+            }
+            else
+            {
+                ++index;
+            }
+
+            SetNewDestinationPoint(index);
+            StartCoroutine(SetBoolWithDelay(hasDesinationChangedName, 1f));
+            hasReachedPoint = false;
+            Debug.Log("ghfhg");
+        }
+
+    }
+
+    IEnumerator SetBoolWithDelay(string name, float time)
+    {
+        bool monGrosBool = false;
+
+        for (int i = 0; i < time; ++i)
+        {
+            if (hasBeenChase)
+            {
+                monGrosBool = true;
+                Debug.Log("reset = " + name + " // " + i);
+            }
+            yield return new WaitForSecondsRealtime(1);
+        }
+
+        if (!int.TryParse(string.Format("{0}", time), out int ignore))
+        {
+            yield return new WaitForSecondsRealtime(0.5f);
+        }
+
+        if (!monGrosBool)
+        {
+            if (name == "hasDesinationChanged")
+            {
+                if (hasDesinationChanged)
                 {
-                    index = i;
-                    break;
+                    hasDesinationChanged = false;
                 }
+                else if (!hasDesinationChanged)
+                {
+                    hasDesinationChanged = true;
+                }
+            }
+            else if (animator.GetBool(name))
+            {
+                animator.SetBool(name, false);
+            }
+            else if (!animator.GetBool(name))
+            {
+                animator.SetBool(name, true);
             }
         }
 
-        return index;
     }
 
-    public int GetIndexOfVectorInArray(Vector3 vector, Vector3[] array)
+    IEnumerator SetBoolWithDelay(string name, bool status, float time)
     {
-        int index = -1;
+        bool monGrosBool = false;
 
-        if (array.Length > 0)
+        for (int i = 0; i < time; ++i)
         {
-            for (int i = 0; i < array.Length; ++i)
+            if (hasBeenChase)
             {
-                if (vector == array[i])
-                {
-                    index = i;
-                    break;
-                }
+                monGrosBool = true;
+                Debug.Log("reset = " + name + " // " + i);
             }
+            yield return new WaitForSecondsRealtime(1);
         }
 
-        return index;
+        if (!int.TryParse(string.Format("{0}", time), out int ignore))
+        {
+            yield return new WaitForSecondsRealtime(0.5f);
+        }
+
+        if (!monGrosBool)
+        {
+            animator.SetBool(name, status);
+        }
+
     }
 
-    IEnumerator WaitingPause(float time)
+    public void SetBool(string name)
     {
-        hasDesinationChanged = true;
-        if (transform.name == "Woman")
+        if (animator.GetBool(name))
         {
-            Debug.Log("PauseDestination = " + hasDesinationChanged);
+            animator.SetBool(name, false);
         }
-        yield return new WaitForSecondsRealtime(time);
-        if (index == destinations.Length - 1)
+        else if (!animator.GetBool(name))
         {
-            index = 0;
+            animator.SetBool(name, true);
         }
-        else
-        {
-            ++index;
-        }
-
-        SetNewDestination(index);
-        StartCoroutine(WaitingResetBool(hasDesinationChanged, false, 2f));
     }
 
-    IEnumerator WaitingResetBool(bool boolean, bool status, float time)
+    public void GetRotation()
     {
-        yield return new WaitForSecondsRealtime(time);
-        boolean = status;
-        if (transform.name == "Woman")
+        euler = new Vector3(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y - 180, transform.rotation.eulerAngles.z);
+    }
+
+    public void ApplyRotation()
+    {
+        if (euler != null)
         {
-            Debug.Log("PauseBool = " + hasDesinationChanged);
+            transform.rotation = Quaternion.Euler(euler);
         }
+    }
+
+    public void ResetAllBool()
+    {
+        animator.SetBool(isSitting, false);
+        animator.SetBool(isSitPlaying, false);
+        animator.SetBool(isSitPointing, false);
+        animator.SetBool(isSitYelling, false);
+        animator.SetBool(isSitClaping, false);
+        animator.SetBool(isOpening, false);
+        animator.SetBool(isDrinking, false);
+        animator.SetBool(isCooking, false);
+        animator.SetBool(isStandPointing, false);
+        animator.SetBool(isStandLooking, false);
+        animator.SetBool(isPlaying, false);
+
+        hasDesinationChanged = false;
+        hasReachedPoint = false;
+        animator.SetBool(isRunning, true);
     }
 }
