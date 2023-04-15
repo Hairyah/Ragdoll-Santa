@@ -44,13 +44,11 @@ public class CharacterScript : MonoBehaviour
         if (Input.GetButton("GrapDroit"))
         {
             brasDroit.AddRelativeForce(new Vector3(15, 1, 1));
-            Debug.Log("GRAPD");
         }
 
         if (Input.GetButton("GrapGauche"))
         {
             brasGauche.AddRelativeForce(new Vector3(15, 1, 1));
-            Debug.Log("GRAPG");
         }
 
         head.AddForce(new Vector3(1, 20, 1));
@@ -71,7 +69,6 @@ public class CharacterScript : MonoBehaviour
     void GatherInput()
     {
         input = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
-        
     }
 
     void Look()
@@ -108,8 +105,8 @@ public class CharacterScript : MonoBehaviour
             playerObject.transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, -90);
             //rotatePoint.transform.position = playerObject.transform.position;
 
-            Debug.Log("Rotate : " + rotatePoint.transform.position);
-            Debug.Log("Pelvis : " + playerObject.transform.position);
+            /*Debug.Log("Rotate : " + rotatePoint.transform.position);
+            Debug.Log("Pelvis : " + playerObject.transform.position);*/
 
             transform.rotation = Quaternion.RotateTowards(transform.rotation, rot, turnSpeed * Time.deltaTime);
         }

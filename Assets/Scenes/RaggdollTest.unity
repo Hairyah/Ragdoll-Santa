@@ -261,6 +261,7 @@ GameObject:
   - component: {fileID: 23766150}
   - component: {fileID: 23766149}
   - component: {fileID: 23766148}
+  - component: {fileID: 23766151}
   m_Layer: 6
   m_Name: RigLPalm
   m_TagString: Player
@@ -358,6 +359,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &23766151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 23766146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bc9267e0cfa3624198060a5a5ae4c89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGrappingGauche: 0
 --- !u!54 &58598700
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1182,6 +1196,66 @@ CapsuleCollider:
   m_Height: 0.38
   m_Direction: 0
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &212642569
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 212642570}
+  - component: {fileID: 212642572}
+  - component: {fileID: 212642571}
+  m_Layer: 0
+  m_Name: ZonePourPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &212642570
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 212642569}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.53, y: -0.14699769, z: 0.15942526}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &212642571
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 212642569}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 7.766597, y: 4.483033, z: 7.766597}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &212642572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 212642569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60e9e27e5bfaac343a965cce6437e917, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grapDroit: {fileID: 1579039055}
+  grapGauche: {fileID: 23766151}
 --- !u!1 &270457876
 GameObject:
   m_ObjectHideFlags: 0
@@ -4888,7 +4962,7 @@ GameObject:
   - component: {fileID: 1262540898}
   m_Layer: 0
   m_Name: Cube (1)
-  m_TagString: Untagged
+  m_TagString: Objet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6691,6 +6765,7 @@ GameObject:
   - component: {fileID: 1579039054}
   - component: {fileID: 1579039053}
   - component: {fileID: 1579039052}
+  - component: {fileID: 1579039055}
   m_Layer: 6
   m_Name: RigRPalm
   m_TagString: Player
@@ -6788,6 +6863,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1579039055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1579039050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36b85f6ba611cf24fbe6fa86fd518a8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGrapping: 0
 --- !u!54 &1581084199
 Rigidbody:
   m_ObjectHideFlags: 0

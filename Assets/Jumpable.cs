@@ -8,7 +8,7 @@ public class Jumpable : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag != "Player")
+        if (collision.gameObject.tag != "Player" && collision.gameObject.tag != "Objet")
         {
             _characterScript.canJump = true;
         }
