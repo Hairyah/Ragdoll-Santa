@@ -12,13 +12,7 @@ public class CharacterScript : MonoBehaviour
     [SerializeField] private float turnSpeed = 360;
     public bool canJump = true;
     public float maxRotation = 0;
-    private Vector3 startPosition;
     [SerializeField] private GameObject rotatePoint;
-
-    [SerializeField] private GameObject avant;
-    [SerializeField] private GameObject arriere;
-    [SerializeField] private GameObject gauche;
-    [SerializeField] private GameObject droit;
 
     [Header("Ragdoll Part")]
     [SerializeField] private Rigidbody brasDroit;
@@ -26,9 +20,14 @@ public class CharacterScript : MonoBehaviour
     [SerializeField] private Rigidbody centerMass;
     [SerializeField] private Rigidbody head;
 
+    private AudioManager _audioManager;
+
+
     private void Start()
     {
-        startPosition = transform.position;
+        _audioManager = FindObjectOfType<AudioManager>();
+        _audioManager.Play("Theme");
+        _audioManager.Play("Ambiance");
     }
 
     void Update()

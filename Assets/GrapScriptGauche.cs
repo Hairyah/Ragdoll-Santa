@@ -5,6 +5,7 @@ using UnityEngine;
 public class GrapScriptGauche : MonoBehaviour
 {
     [SerializeField] bool isGrappingGauche = false;
+    [SerializeField] TrailRenderer handTrailRenderer;
 
     void Update()
     {
@@ -13,9 +14,18 @@ public class GrapScriptGauche : MonoBehaviour
             isGrappingGauche = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.B))
+        if (Input.GetButton("Ungrap"))
         {
             UngrapGauche();
+        }
+
+        if (isGrappingGauche)
+        {
+            handTrailRenderer.emitting = true;
+        }
+        else
+        {
+            handTrailRenderer.emitting = false;
         }
     }
 
