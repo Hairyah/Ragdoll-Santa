@@ -3508,6 +3508,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hasSpotted: 0
   hasBeenChase: 0
+  drum: {fileID: 2397352912234757982}
+  arcade: {fileID: 746655687}
   isWalking: isWalking
   isRunning: isRunning
   isSitting: isSitting
@@ -5190,6 +5192,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4a36ff9ae2981d44baa137691069a20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  floatingText: {fileID: 7053458924814853991, guid: 7659d93360eb72d44b99c2a8b42edf79, type: 3}
 --- !u!136 &317276553
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -9614,6 +9617,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hasSpotted: 0
   hasBeenChase: 0
+  drum: {fileID: 2397352912234757982}
+  arcade: {fileID: 746655687}
   isWalking: isWalking
   isRunning: isRunning
   isSitting: isSitting
@@ -10601,6 +10606,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4a36ff9ae2981d44baa137691069a20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  floatingText: {fileID: 7053458924814853991, guid: 7659d93360eb72d44b99c2a8b42edf79, type: 3}
 --- !u!136 &833295851
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -21378,6 +21384,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4a36ff9ae2981d44baa137691069a20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  floatingText: {fileID: 7053458924814853991, guid: 7659d93360eb72d44b99c2a8b42edf79, type: 3}
 --- !u!136 &1833288358
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -21735,6 +21742,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4a36ff9ae2981d44baa137691069a20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  floatingText: {fileID: 7053458924814853991, guid: 7659d93360eb72d44b99c2a8b42edf79, type: 3}
 --- !u!136 &1873112299
 CapsuleCollider:
   m_ObjectHideFlags: 0

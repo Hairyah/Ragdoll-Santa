@@ -8,6 +8,9 @@ public class PathManager : MonoBehaviour
     public bool hasSpotted = false;
     public bool hasBeenChase = false;
 
+    public GameObject drum;
+    public GameObject arcade;
+
     private Animator animator;
     public string isWalking = "isWalking";
     public string isRunning = "isRunning";
@@ -75,10 +78,23 @@ public class PathManager : MonoBehaviour
 
     void Update()
     {
-        if (transform.name == "Woman")
+        if (transform.name == "Man" && animator.GetBool(isPlaying) == true)
         {
-            //Debug.Log(hasReachedPoint);
+            arcade.GetComponent<AudioSource>().enabled = true;
         }
+        else if (transform.name == "Man" && animator.GetBool(isSitPlaying) == true)
+        {
+            drum.GetComponent<AudioSource>().enabled = true;
+        }
+        else if (transform.name == "Man" && animator.GetBool(isPlaying) == false)
+        {
+            arcade.GetComponent<AudioSource>().enabled = false;
+        }
+        else if (transform.name == "Man" && animator.GetBool(isSitPlaying) == false)
+        {
+            drum.GetComponent<AudioSource>().enabled = false;
+        }
+
         if (hasSpotted)
         {
             navMeshAgent.SetDestination(player.transform.position);
