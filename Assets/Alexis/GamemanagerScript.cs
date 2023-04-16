@@ -13,6 +13,9 @@ public class GamemanagerScript : MonoBehaviour
     public Vector3 playerStartingPos;
     public Vector3 playerStartingRot;
 
+    public GameObject resetMenu;
+    public GameObject hud;
+
     public Text timeText;
     public Text moneyText;
     public float timeRemaining = 190;
@@ -27,6 +30,7 @@ public class GamemanagerScript : MonoBehaviour
     private void Start()
     {
         timerIsRunning = true;
+        resetMenu.SetActive(false);
         //monGrosClone = Instantiate(monGrosPrefab, Vector3.zero, Quaternion.identity);
     }
 
@@ -80,6 +84,8 @@ public class GamemanagerScript : MonoBehaviour
 
     public void HardReset()
     {
+        resetMenu.SetActive(false);
+        hud.SetActive(true);
         Destroy(monGrosClone);
         score = 0;
         timeRemaining = 190;
@@ -96,6 +102,7 @@ public class GamemanagerScript : MonoBehaviour
         Destroy(man);
         Destroy(woman);
         Destroy(player);
-        HardReset(); // Faudra pas l'appeler ici mais quand le joueur appuie sur le bouton de l'UI
+        resetMenu.SetActive(true);
+        hud.SetActive(false);
     }
 }

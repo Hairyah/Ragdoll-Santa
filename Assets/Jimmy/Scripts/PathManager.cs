@@ -5,8 +5,6 @@ using UnityEngine.AI;
 
 public class PathManager : MonoBehaviour
 {
-    [SerializeField] GamemanagerScript _gamemanagerScript;
-
     [SerializeField] public Vector3 startingPos;
     [SerializeField] public Vector3 startingRot;
     public bool hasSpotted = false;

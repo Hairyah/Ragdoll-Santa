@@ -32,6 +32,7 @@ public class CharacterScript : MonoBehaviour
         _audioManager = FindObjectOfType<AudioManager>();
         _audioManager.Play("Theme");
         _audioManager.Play("Ambiance");
+        _gamemanagerScript = FindObjectOfType<GamemanagerScript>();
     }
 
     void Update()

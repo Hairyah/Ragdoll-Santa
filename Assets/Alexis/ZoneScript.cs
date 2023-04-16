@@ -14,6 +14,7 @@ public class ZoneScript : MonoBehaviour
     private void Start()
     {
         _audioManager = FindObjectOfType<AudioManager>();
+        _gamemanagerScript = FindObjectOfType<GamemanagerScript>();
     }
 
     private void OnTriggerEnter(Collider other)
