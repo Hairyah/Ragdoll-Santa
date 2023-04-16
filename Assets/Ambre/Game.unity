@@ -6326,6 +6326,12 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+  - name: Money
+    clip: {fileID: 8300000, guid: 794408cce14aeaf4fad8fe30580d44f4, type: 3}
+    volume: 0.202
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
 --- !u!4 &432543771
 Transform:
   m_ObjectHideFlags: 0
@@ -10926,6 +10932,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeText: {fileID: 2012882251}
+  moneyText: {fileID: 310986255}
   timeRemaining: 190
   timerIsRunning: 0
 --- !u!4 &865015558
@@ -17593,6 +17600,7 @@ MonoBehaviour:
   grapDroit: {fileID: 2041420545}
   grapGauche: {fileID: 77596170}
   confetti: {fileID: 1007415899521880976, guid: 7666647ad5a70e440b05e90a3388a273, type: 3}
+  _gamemanagerScript: {fileID: 865015557}
 --- !u!4 &1556191925
 Transform:
   m_ObjectHideFlags: 0
