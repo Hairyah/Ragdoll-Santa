@@ -5,8 +5,11 @@ using UnityEngine;
 
 public class FloatingText : MonoBehaviour
 {
+    private AudioManager _audioManager;
+
     void Start()
     {
+        _audioManager = FindObjectOfType<AudioManager>();
         Init("monGrosBool");
     }
 
@@ -22,6 +25,7 @@ public class FloatingText : MonoBehaviour
             case "NPC":
                 Destroy(transform.gameObject, 2f);
                 transform.GetComponent<TextMeshPro>().text = "!";
+                _audioManager.Play("Spotted");
                 break;
 
             case "Particles":
