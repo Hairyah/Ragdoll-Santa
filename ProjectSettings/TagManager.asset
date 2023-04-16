@@ -12,6 +12,8 @@ TagManager:
   - Wall
   - TriggerEnter
   - TriggerExit
+  - NPC
+  - Particles
   layers:
   - Default
   - TransparentFX
