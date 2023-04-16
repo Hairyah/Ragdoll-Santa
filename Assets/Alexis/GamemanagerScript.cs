@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class GamemanagerScript : MonoBehaviour
 {
     public GameObject monGrosPrefab;
+    public GameObject monGrosClone;
     public GameObject man;
     public GameObject woman;
     public GameObject player;
@@ -26,6 +27,7 @@ public class GamemanagerScript : MonoBehaviour
     private void Start()
     {
         timerIsRunning = true;
+        //monGrosClone = Instantiate(monGrosPrefab, Vector3.zero, Quaternion.identity);
     }
 
     private void Update()
@@ -47,7 +49,8 @@ public class GamemanagerScript : MonoBehaviour
 
         if (timeRemaining <= 0)
         {
-            HardReset();
+            Debug.Log("T'as plus le temps, vite !");
+            ResetMenu();
         }
     }
 
@@ -67,22 +70,32 @@ public class GamemanagerScript : MonoBehaviour
     public void SoftReset()
     {
         timerIsRunning = false;
-        Destroy(man);
-        Destroy(woman);
-        Instantiate(man);
-        Instantiate(woman);
         player.transform.position = playerStartingPos;
         player.transform.rotation = Quaternion.Euler(playerStartingRot);
+        man.GetComponent<PathManager>().Init();
+        woman.GetComponent<PathManager>().Init();
+        
         timerIsRunning = true;
     }
 
     public void HardReset()
     {
-        timerIsRunning = false;
-        Destroy(monGrosPrefab);
+        Destroy(monGrosClone);
         score = 0;
         timeRemaining = 190;
-        Instantiate(monGrosPrefab, Vector3.zero, Quaternion.identity);
+        monGrosClone = Instantiate(monGrosPrefab, Vector3.zero, Quaternion.identity);
+        man = monGrosClone.transform.GetChild(0).gameObject;
+        woman = monGrosClone.transform.GetChild(1).gameObject;
+        player = monGrosClone.transform.GetChild(2).gameObject;
         timerIsRunning = true;
+    }
+
+    public void ResetMenu()
+    {
+        timerIsRunning = false;
+        Destroy(man);
+        Destroy(woman);
+        Destroy(player);
+        HardReset(); // Faudra pas l'appeler ici mais quand le joueur appuie sur le bouton de l'UI
     }
 }

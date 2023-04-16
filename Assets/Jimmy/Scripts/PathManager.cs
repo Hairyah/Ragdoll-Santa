@@ -7,16 +7,15 @@ public class PathManager : MonoBehaviour
 {
     [SerializeField] GamemanagerScript _gamemanagerScript;
 
-    [SerializeField] Vector3 startingPos;
-    [SerializeField] Vector3 startingRot;
+    [SerializeField] public Vector3 startingPos;
+    [SerializeField] public Vector3 startingRot;
     public bool hasSpotted = false;
     public bool hasBeenChase = false;
-    public bool hasTouchedPlayer = false;
 
     public GameObject drum;
     public GameObject arcade;
 
-    private Animator animator;
+    public Animator animator;
     public string isWalking = "isWalking";
     public string isRunning = "isRunning";
     public string isSitting = "isSitting";
@@ -46,14 +45,11 @@ public class PathManager : MonoBehaviour
     private Vector3 euler;
 
     public NavMeshAgent navMeshAgent;
-    private GameObject player;
+    [SerializeField] GameObject player;
 
     void Awake()
     {
-        transform.position = startingPos;
-        transform.rotation = Quaternion.Euler(startingRot);
-
-        animator = transform.GetComponent<Animator>();
+        //animator = transform.GetComponent<Animator>();
 
         destinationsFinalPos = new Vector3[destinations.Length];
         destinationsPointPos = new Vector3[destinations.Length, 1];
@@ -64,24 +60,9 @@ public class PathManager : MonoBehaviour
             destinationsPointPos[i, 0] = new Vector3(destinations[i].GetChild(0).position.x, destinations[i].GetChild(0).position.y, destinations[i].GetChild(0).position.z);
         }
 
-        switch (transform.name)
-        {
-            case "Man":
-                animator.SetBool(isWoman, false);
-                break;
-
-            case "Woman":
-                animator.SetBool(isWoman, true);
-                break;
-        }
-
         navMeshAgent = transform.GetComponent<NavMeshAgent>();
-        player = GameObject.FindGameObjectWithTag("Player");
-    }
 
-    private void Start()
-    {
-
+        Init();
     }
 
     void Update()
@@ -107,13 +88,6 @@ public class PathManager : MonoBehaviour
         {
             navMeshAgent.SetDestination(player.transform.position);
             ResetAllBool();
-            if (transform.position == navMeshAgent.destination && !hasTouchedPlayer)
-            {
-                Debug.Log("Qu'est-ce tu vas faire ? Écouter du Linkin Park ? 'Culé va !");
-                hasTouchedPlayer = true;
-                _gamemanagerScript.AddArgent(-50);
-                _gamemanagerScript.SoftReset();
-            }
         }
         else
         {
@@ -145,6 +119,29 @@ public class PathManager : MonoBehaviour
             
         }
     }
+
+    public void Init()
+    {
+        transform.position = startingPos;
+        transform.rotation = Quaternion.Euler(startingRot);
+
+        switch (transform.name)
+        {
+            case "Man":
+                animator.SetBool(isWoman, false);
+                break;
+
+            case "Woman":
+                animator.SetBool(isWoman, true);
+                break;
+        }
+
+        hasSpotted = false;
+        hasBeenChase = false;
+        hasReachedPoint = false;
+        hasDesinationChanged = false;
+        animator.SetBool(isRunning, false);
+}
 
     public void SetAnimation()
     {

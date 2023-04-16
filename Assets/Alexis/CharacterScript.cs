@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CharacterScript : MonoBehaviour
 {
+    [SerializeField] GamemanagerScript _gamemanagerScript;
+
     [Header("Movement Part")]
     private Vector3 input;
     private Vector3 IsoInput;
@@ -21,6 +23,8 @@ public class CharacterScript : MonoBehaviour
     [SerializeField] private Rigidbody head;
 
     private AudioManager _audioManager;
+
+    private bool hasTouchedNPC = false;
 
 
     private void Start()
@@ -129,5 +133,17 @@ public class CharacterScript : MonoBehaviour
         //playerObject.transform.position += new Vector3(0, 0,  playerSpeed * Time.deltaTime);
 
         transform.Translate(IsoInput * input.magnitude * playerSpeed * Time.deltaTime, Space.World);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "NPC" && !hasTouchedNPC)
+        {
+            Debug.Log("Qu'est-ce tu vas faire ? Écouter du Linkin Park ? 'Culé va !");
+            hasTouchedNPC = true;
+            _gamemanagerScript.AddArgent(-50);
+            _gamemanagerScript.SoftReset();
+            hasTouchedNPC = false;
+        }
     }
 }
