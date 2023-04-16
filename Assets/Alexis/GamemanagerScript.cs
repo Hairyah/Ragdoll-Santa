@@ -5,11 +5,23 @@ using UnityEngine.UI;
 
 public class GamemanagerScript : MonoBehaviour
 {
+    public GameObject monGrosPrefab;
+    public GameObject man;
+    public GameObject woman;
+    public GameObject player;
+    public Vector3 playerStartingPos;
+    public Vector3 playerStartingRot;
+
     public Text timeText;
     public Text moneyText;
     public float timeRemaining = 190;
     public bool timerIsRunning = false;
     private float score = 0;
+
+    private void Awake()
+    {
+        //Instantiate(monGrosPrefab, Vector3.zero, Quaternion.identity);
+    }
 
     private void Start()
     {
@@ -32,6 +44,11 @@ public class GamemanagerScript : MonoBehaviour
                 timerIsRunning = false;
             }
         }
+
+        if (timeRemaining <= 0)
+        {
+            HardReset();
+        }
     }
 
     void DisplayTime(float timeToDisplay)
@@ -45,5 +62,27 @@ public class GamemanagerScript : MonoBehaviour
     {
         score += valeur;
         moneyText.text = score+" $";
+    }
+
+    public void SoftReset()
+    {
+        timerIsRunning = false;
+        Destroy(man);
+        Destroy(woman);
+        Instantiate(man);
+        Instantiate(woman);
+        player.transform.position = playerStartingPos;
+        player.transform.rotation = Quaternion.Euler(playerStartingRot);
+        timerIsRunning = true;
+    }
+
+    public void HardReset()
+    {
+        timerIsRunning = false;
+        Destroy(monGrosPrefab);
+        score = 0;
+        timeRemaining = 190;
+        Instantiate(monGrosPrefab, Vector3.zero, Quaternion.identity);
+        timerIsRunning = true;
     }
 }

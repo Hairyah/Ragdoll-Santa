@@ -109,8 +109,10 @@ public class PathManager : MonoBehaviour
             ResetAllBool();
             if (transform.position == navMeshAgent.destination && !hasTouchedPlayer)
             {
+                Debug.Log("Qu'est-ce tu vas faire ? Écouter du Linkin Park ? 'Culé va !");
                 hasTouchedPlayer = true;
-                //Appeler fonction Soft Reset GameManager
+                _gamemanagerScript.AddArgent(-50);
+                _gamemanagerScript.SoftReset();
             }
         }
         else
@@ -120,11 +122,9 @@ public class PathManager : MonoBehaviour
                 SetNewDestination(index);
                 if (transform.position == navMeshAgent.destination)
                 {
-                    Debug.Log("hasDestinationChanged Update = " + hasDesinationChanged);
                     if (!hasDesinationChanged)
                     {
                         hasBeenChase = false;
-                        //Debug.Log("kjhfk");
                         ResetAllBool();
                         hasReachedPoint = true;
                         SetAnimation();
@@ -137,7 +137,6 @@ public class PathManager : MonoBehaviour
                 if (transform.position == navMeshAgent.destination)
                 {
                     hasBeenChase = false;
-                    //Debug.Log("kjhfk");
                     hasReachedPoint = true;
                     SetNewDestination(index);
                 }
@@ -208,7 +207,6 @@ public class PathManager : MonoBehaviour
 
                     case 1:
                         //Fauteuil ===> 20f
-                        Debug.Log("ljkhkljgkjhfjhfng");
                         StartCoroutine(WaitingToSetNewDestination(20f));
                         animator.SetBool(isSitting, true);
                         StartCoroutine(SetBoolWithDelay(isSitLaughing, true, 5f));
@@ -298,14 +296,12 @@ public class PathManager : MonoBehaviour
     IEnumerator WaitingToSetNewDestination(float time)
     {
         bool monGrosBool = false;
-        Debug.Log("hgl:jhh;hg");
 
         for (int i = 0; i < time; ++i)
         {
             if (hasBeenChase)
             {
                 monGrosBool = true;
-                Debug.Log("reset // " + i);
             }
             yield return new WaitForSecondsRealtime(1);
         }
@@ -330,7 +326,6 @@ public class PathManager : MonoBehaviour
             SetNewDestinationPoint(index);
             StartCoroutine(SetBoolWithDelay(hasDesinationChangedName, false, 1f));
             hasReachedPoint = false;
-            Debug.Log("ghfhg");
         }
 
     }
@@ -344,7 +339,6 @@ public class PathManager : MonoBehaviour
             if (hasBeenChase)
             {
                 monGrosBool = true;
-                Debug.Log("reset = " + name + " // " + i);
             }
             yield return new WaitForSecondsRealtime(1);
         }
@@ -388,7 +382,6 @@ public class PathManager : MonoBehaviour
             if (hasBeenChase)
             {
                 monGrosBool = true;
-                Debug.Log("reset = " + name + " // " + i);
             }
             yield return new WaitForSecondsRealtime(1);
         }
@@ -408,7 +401,6 @@ public class PathManager : MonoBehaviour
             {
                 animator.SetBool(name, status);
             }
-            Debug.Log(name + " = " + status);
         }
     }
 
