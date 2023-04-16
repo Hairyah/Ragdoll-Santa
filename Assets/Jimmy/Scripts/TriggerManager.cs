@@ -6,8 +6,8 @@ public class TriggerManager : MonoBehaviour
 {
     PathManager pathManager;
 
-    float walkingSpeed = 3.5f;
-    float runningSpeed = 7f;
+    float walkingSpeed = 2f;
+    float runningSpeed = 4f;
 
     void Start()
     {
