@@ -8,6 +8,7 @@ public class ZoneScript : MonoBehaviour
     [SerializeField] GrapScriptGauche grapGauche;
     [SerializeField] GameObject confetti;
     private AudioManager _audioManager;
+    [SerializeField] GamemanagerScript _gamemanagerScript;
 
 
     private void Start()
@@ -21,10 +22,13 @@ public class ZoneScript : MonoBehaviour
         {
             Instantiate(confetti, other.gameObject.transform.position, Quaternion.identity);
             _audioManager.Play("Honk");
+            _audioManager.Play("Money");
 
             grapDroit.Ungrap();
             grapGauche.UngrapGauche();
             Destroy(other.gameObject);
+
+            _gamemanagerScript.AddArgent(100);
         }
     }
 }

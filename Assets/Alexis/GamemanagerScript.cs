@@ -6,8 +6,11 @@ using UnityEngine.UI;
 public class GamemanagerScript : MonoBehaviour
 {
     public Text timeText;
+    public Text moneyText;
     public float timeRemaining = 190;
     public bool timerIsRunning = false;
+    private float score = 0;
+
     private void Start()
     {
         timerIsRunning = true;
@@ -36,5 +39,11 @@ public class GamemanagerScript : MonoBehaviour
         float minutes = Mathf.FloorToInt(timeToDisplay / 60);
         float seconds = Mathf.FloorToInt(timeToDisplay % 60);
         timeText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+    }
+
+    public void AddArgent(float valeur)
+    {
+        score += valeur;
+        moneyText.text = score+" $";
     }
 }
