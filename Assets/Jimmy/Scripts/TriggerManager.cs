@@ -24,9 +24,10 @@ public class TriggerManager : MonoBehaviour
             if (!pathManager.hasSpotted)
             {
                 /*GameObject newFloatingText = Instantiate(floatingText, man.transform);
-                newFloatingText.transform.position = new Vector3(man.transform.position.x, man.transform.position.y + 1, man.transform.position.z);*/
-                GameObject newFloatingText = Instantiate(floatingText, new Vector3(man.transform.position.x, man.transform.position.y + 1, man.transform.position.z), Quaternion.identity);
+                newFloatingText.transform.position = new Vector3(man.transform.position.x, man.transform.position.y + 2, man.transform.position.z);*/
+                GameObject newFloatingText = Instantiate(floatingText, new Vector3(man.transform.position.x, man.transform.position.y + 2, man.transform.position.z), Quaternion.identity);
                 newFloatingText.transform.SetParent(man.transform);
+                newFloatingText.GetComponent<FloatingText>().Init("jhf");
             }
 
             pathManager.hasSpotted = true;

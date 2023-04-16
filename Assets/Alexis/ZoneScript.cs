@@ -20,7 +20,10 @@ public class ZoneScript : MonoBehaviour
     {
         if (other.tag == "Objet")
         {
-            Instantiate(confetti, other.gameObject.transform.position, Quaternion.identity);
+            GameObject confetti = Instantiate(this.confetti, other.gameObject.transform.position, Quaternion.identity);
+            confetti.transform.GetChild(1).GetComponent<FloatingText>().Init(other.gameObject.GetComponent<ObjectManager>().stringValue);
+            _gamemanagerScript.AddArgent(other.gameObject.GetComponent<ObjectManager>().intValue);
+
             _audioManager.Play("Honk");
             _audioManager.Play("Money");
 

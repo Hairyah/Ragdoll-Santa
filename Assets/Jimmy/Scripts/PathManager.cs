@@ -5,8 +5,13 @@ using UnityEngine.AI;
 
 public class PathManager : MonoBehaviour
 {
+    [SerializeField] GamemanagerScript _gamemanagerScript;
+
+    [SerializeField] Vector3 startingPos;
+    [SerializeField] Vector3 startingRot;
     public bool hasSpotted = false;
     public bool hasBeenChase = false;
+    public bool hasTouchedPlayer = false;
 
     public GameObject drum;
     public GameObject arcade;
@@ -45,6 +50,9 @@ public class PathManager : MonoBehaviour
 
     void Awake()
     {
+        transform.position = startingPos;
+        transform.rotation = Quaternion.Euler(startingRot);
+
         animator = transform.GetComponent<Animator>();
 
         destinationsFinalPos = new Vector3[destinations.Length];
@@ -99,6 +107,11 @@ public class PathManager : MonoBehaviour
         {
             navMeshAgent.SetDestination(player.transform.position);
             ResetAllBool();
+            if (transform.position == navMeshAgent.destination && !hasTouchedPlayer)
+            {
+                hasTouchedPlayer = true;
+                //Appeler fonction Soft Reset GameManager
+            }
         }
         else
         {

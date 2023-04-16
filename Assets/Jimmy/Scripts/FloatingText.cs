@@ -7,10 +7,9 @@ public class FloatingText : MonoBehaviour
 {
     private AudioManager _audioManager;
 
-    void Start()
+    void Awake()
     {
         _audioManager = FindObjectOfType<AudioManager>();
-        Init("monGrosBool");
     }
 
     public void Init(string text)
