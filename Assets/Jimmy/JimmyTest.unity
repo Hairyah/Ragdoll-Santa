@@ -577,11 +577,6 @@ Transform:
   m_Father: {fileID: 1562218987}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &222558372 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8671306828115786849, guid: c78b068d06d936540835ce2788ae7bcd, type: 3}
-  m_PrefabInstance: {fileID: 2004175003}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &239663269
 GameObject:
   m_ObjectHideFlags: 0
@@ -960,7 +955,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &425932138
 Transform:
   m_ObjectHideFlags: 0
@@ -14393,10 +14388,11 @@ MonoBehaviour:
   index: 0
   hasReachedPoint: 0
   destinations:
-  - {fileID: 547185505}
-  - {fileID: 1056560567}
-  - {fileID: 222558372}
   - {fileID: 1789505629}
+  - {fileID: 570386898}
+  - {fileID: 1696803356}
+  - {fileID: 1769161809}
+  hasDesinationChanged: 0
   rig: {fileID: 1082271958957488719}
   navMeshAgent: {fileID: 0}
 --- !u!95 &5866666020533653951
@@ -14501,6 +14497,7 @@ MonoBehaviour:
   - {fileID: 1696803356}
   - {fileID: 570386898}
   - {fileID: 1789505629}
+  hasDesinationChanged: 0
   rig: {fileID: 1082271959400526372}
   navMeshAgent: {fileID: 0}
 --- !u!4 &5901452233518764333

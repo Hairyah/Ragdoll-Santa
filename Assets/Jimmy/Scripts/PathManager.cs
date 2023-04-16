@@ -32,7 +32,7 @@ public class PathManager : MonoBehaviour
     [SerializeField] Transform[] destinations;
     private Vector3[] destinationsFinalPos;
     private Vector3[,] destinationsPointPos;
-    private bool hasDesinationChanged = false;
+    public bool hasDesinationChanged = false;
     private string hasDesinationChangedName = "hasDesinationChanged";
     public GameObject rig;
     private Vector3 euler;
@@ -75,6 +75,10 @@ public class PathManager : MonoBehaviour
 
     void Update()
     {
+        if (transform.name == "Woman")
+        {
+            //Debug.Log(hasReachedPoint);
+        }
         if (hasSpotted)
         {
             navMeshAgent.SetDestination(player.transform.position);
@@ -87,6 +91,7 @@ public class PathManager : MonoBehaviour
                 SetNewDestination(index);
                 if (transform.position == navMeshAgent.destination)
                 {
+                    Debug.Log("hasDestinationChanged Update = " + hasDesinationChanged);
                     if (!hasDesinationChanged)
                     {
                         hasBeenChase = false;
@@ -116,7 +121,7 @@ public class PathManager : MonoBehaviour
     public void SetAnimation()
     {
         hasDesinationChanged = true;
-
+        
         switch (transform.name)
         {
             case "Man":
@@ -174,6 +179,7 @@ public class PathManager : MonoBehaviour
 
                     case 1:
                         //Fauteuil ===> 20f
+                        Debug.Log("ljkhkljgkjhfjhfng");
                         StartCoroutine(WaitingToSetNewDestination(20f));
                         animator.SetBool(isSitting, true);
                         StartCoroutine(SetBoolWithDelay(isSitLaughing, true, 5f));
@@ -365,9 +371,16 @@ public class PathManager : MonoBehaviour
 
         if (!monGrosBool)
         {
-            animator.SetBool(name, status);
+            if (name == "hasDesinationChanged")
+            {
+                hasDesinationChanged = status;
+            }
+            else
+            {
+                animator.SetBool(name, status);
+            }
+            Debug.Log(name + " = " + status);
         }
-
     }
 
     public void SetBool(string name)
