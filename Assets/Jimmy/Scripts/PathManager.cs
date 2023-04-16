@@ -128,8 +128,8 @@ public class PathManager : MonoBehaviour
                         StartCoroutine(WaitingToSetNewDestination(20.5f));
                         animator.SetBool(isSitting, true);
                         animator.SetBool(isSitPlaying, true);
-                        StartCoroutine(SetBoolWithDelay(isSitting, 15f));
-                        StartCoroutine(SetBoolWithDelay(isSitPlaying, 15f));
+                        StartCoroutine(SetBoolWithDelay(isSitting, false, 15f));
+                        StartCoroutine(SetBoolWithDelay(isSitPlaying, false, 15f));
                         break;
 
                     case 1:
@@ -137,26 +137,26 @@ public class PathManager : MonoBehaviour
                         StartCoroutine(WaitingToSetNewDestination(20f));
                         animator.SetBool(isSitting, true);
                         animator.SetBool(isSitPointing, true);
-                        StartCoroutine(SetBoolWithDelay(isSitPointing, 5f));
-                        StartCoroutine(SetBoolWithDelay(isSitYelling, 8f));
-                        StartCoroutine(SetBoolWithDelay(isSitYelling, 10f));
-                        StartCoroutine(SetBoolWithDelay(isSitPointing, 14f));
-                        StartCoroutine(SetBoolWithDelay(isSitPointing, 16f));
-                        StartCoroutine(SetBoolWithDelay(isSitting, 18f));
+                        StartCoroutine(SetBoolWithDelay(isSitPointing, false, 5f));
+                        StartCoroutine(SetBoolWithDelay(isSitYelling, true, 8f));
+                        StartCoroutine(SetBoolWithDelay(isSitYelling, false, 10f));
+                        StartCoroutine(SetBoolWithDelay(isSitPointing, true, 14f));
+                        StartCoroutine(SetBoolWithDelay(isSitPointing, false, 16f));
+                        StartCoroutine(SetBoolWithDelay(isSitting, true, 18f));
                         break;
 
                     case 2:
                         //Plaque de cuisson ===> 40f
                         StartCoroutine(WaitingToSetNewDestination(40f));
                         animator.SetBool(isCooking, true);
-                        StartCoroutine(SetBoolWithDelay(isCooking, 30f));
+                        StartCoroutine(SetBoolWithDelay(isCooking, false, 30f));
                         break;
 
                     case 3:
                         //Arcade ===> 19.5f
                         StartCoroutine(WaitingToSetNewDestination(19.5f));
                         animator.SetBool(isPlaying, true);
-                        StartCoroutine(SetBoolWithDelay(isPlaying, 18f));
+                        StartCoroutine(SetBoolWithDelay(isPlaying, false, 18f));
                         break;
                 }
 
@@ -185,29 +185,29 @@ public class PathManager : MonoBehaviour
                         //Tableau 1 ===> 18f
                         StartCoroutine(WaitingToSetNewDestination(18f));
                         animator.SetBool(isStandPointing, true);
-                        StartCoroutine(SetBoolWithDelay(isStandPointing, 1f));
-                        StartCoroutine(SetBoolWithDelay(isStandLooking, 5f));
-                        StartCoroutine(SetBoolWithDelay(isStandLooking, 7f));
-                        StartCoroutine(SetBoolWithDelay(isStandPointing, 12f));
-                        StartCoroutine(SetBoolWithDelay(isStandPointing, 13.5f));
+                        StartCoroutine(SetBoolWithDelay(isStandPointing, false, 1f));
+                        StartCoroutine(SetBoolWithDelay(isStandLooking, true, 5f));
+                        StartCoroutine(SetBoolWithDelay(isStandLooking, false, 7f));
+                        StartCoroutine(SetBoolWithDelay(isStandPointing, true, 12f));
+                        StartCoroutine(SetBoolWithDelay(isStandPointing, false, 13.5f));
                         break;
 
                     case 3:
                         //Tableau 2 ===> 18f
                         StartCoroutine(WaitingToSetNewDestination(18f));
                         animator.SetBool(isStandPointing, true);
-                        StartCoroutine(SetBoolWithDelay(isStandPointing, 1f));
-                        StartCoroutine(SetBoolWithDelay(isStandLooking, 5f));
-                        StartCoroutine(SetBoolWithDelay(isStandLooking, 7f));
-                        StartCoroutine(SetBoolWithDelay(isStandPointing, 12f));
-                        StartCoroutine(SetBoolWithDelay(isStandPointing, 13.5f));
+                        StartCoroutine(SetBoolWithDelay(isStandPointing, false, 1f));
+                        StartCoroutine(SetBoolWithDelay(isStandLooking, true, 5f));
+                        StartCoroutine(SetBoolWithDelay(isStandLooking, false, 7f));
+                        StartCoroutine(SetBoolWithDelay(isStandPointing, true, 12f));
+                        StartCoroutine(SetBoolWithDelay(isStandPointing, false, 13.5f));
                         break;
 
                     case 4:
                         //Toilettes ===> 15.5f
                         StartCoroutine(WaitingToSetNewDestination(15.5f));
                         animator.SetBool(isSitting, true);
-                        StartCoroutine(SetBoolWithDelay(isSitting, 13f));
+                        StartCoroutine(SetBoolWithDelay(isSitting, false, 13f));
                         break;
                 }
 
@@ -293,7 +293,7 @@ public class PathManager : MonoBehaviour
             }
 
             SetNewDestinationPoint(index);
-            StartCoroutine(SetBoolWithDelay(hasDesinationChangedName, 1f));
+            StartCoroutine(SetBoolWithDelay(hasDesinationChangedName, false, 1f));
             hasReachedPoint = false;
             Debug.Log("ghfhg");
         }
