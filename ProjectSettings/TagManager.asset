@@ -4,16 +4,7 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - stealingpoint
-  - sittingpoint
-  - pickuppoint
-  - waypoint
-  - Ground
-  - Wall
-  - TriggerEnter
-  - TriggerExit
-  - NPC
-  - Particles
+  - Objet
   layers:
   - Default
   - TransparentFX
@@ -21,7 +12,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Character
   - 
   - 
   - 
