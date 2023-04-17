@@ -31,8 +31,6 @@ public class ZoneScript : MonoBehaviour
             grapDroit.Ungrap();
             grapGauche.UngrapGauche();
             Destroy(other.gameObject);
-
-            _gamemanagerScript.AddArgent(100);
         }
     }
 }

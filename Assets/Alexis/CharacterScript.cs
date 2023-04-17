@@ -57,7 +57,7 @@ public class CharacterScript : MonoBehaviour
             brasGauche.AddRelativeForce(new Vector3(15, 1, 1));
         }
 
-        head.AddForce(new Vector3(1, 20, 1));
+        //head.AddForce(new Vector3(1, 20, 1));
 
         
         if (canJump)

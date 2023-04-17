@@ -58,83 +58,86 @@ public class SeeThroughWall : MonoBehaviour
 
     void Update()
     {
-        float distance = Vector3.Distance(myCamera.transform.position, target.transform.position);
-        Ray ray = new Ray(myCamera.transform.position, (target.transform.position - myCamera.transform.position).normalized);
-        RaycastHit[] hits = Physics.RaycastAll(myCamera.transform.position, (target.transform.position - myCamera.transform.position).normalized, distance);
-
-        //Debug.Log(hits[0].collider.gameObject);
-
-        if (raycastResults != null)
+        if (target != null)
         {
-            foreach (GameObject gameObject in raycastResults)
+            float distance = Vector3.Distance(myCamera.transform.position, target.transform.position);
+            Ray ray = new Ray(myCamera.transform.position, (target.transform.position - myCamera.transform.position).normalized);
+            RaycastHit[] hits = Physics.RaycastAll(myCamera.transform.position, (target.transform.position - myCamera.transform.position).normalized, distance);
+
+            //Debug.Log(hits[0].collider.gameObject);
+
+            if (raycastResults != null)
             {
-                bool same = false;
-
-                for (int i = 0; i < hits.Length; ++i)
+                foreach (GameObject gameObject in raycastResults)
                 {
-                    if (hits[i].collider.gameObject == gameObject)
+                    bool same = false;
+
+                    for (int i = 0; i < hits.Length; ++i)
                     {
-                        same = true;
-                        Debug.Log(same);
+                        if (hits[i].collider.gameObject == gameObject)
+                        {
+                            same = true;
+                            Debug.Log(same);
+                        }
                     }
-                }
 
-                if (!same)
-                {
-                    int index = GetIndexOfObjectInList(gameObject, raycastResults);
-                    Debug.Log(raycastResults[index]);
-                    if (index >= 0)
+                    if (!same)
                     {
-                        raycastResults[index].GetComponent<MeshRenderer>().material = raycastResultMaterials[index];
+                        int index = GetIndexOfObjectInList(gameObject, raycastResults);
+                        Debug.Log(raycastResults[index]);
+                        if (index >= 0)
+                        {
+                            raycastResults[index].GetComponent<MeshRenderer>().material = raycastResultMaterials[index];
+                        }
                     }
                 }
             }
-        }
-        
-        //raycastResults = new List<GameObject>();
-        //raycastResultMaterials = new List<Material>();
 
-        foreach (RaycastHit hit in hits)
-        {
-            if (hit.collider.gameObject.tag == "Wall")
+            //raycastResults = new List<GameObject>();
+            //raycastResultMaterials = new List<Material>();
+
+            foreach (RaycastHit hit in hits)
             {
-                
-                if (hit.collider.gameObject.GetComponent<MeshRenderer>().material.color == blueMat.color)
+                if (hit.collider.gameObject.tag == "Wall")
                 {
-                    raycastResults.Add(hit.collider.gameObject);
-                    raycastResultMaterials.Add(hit.collider.gameObject.GetComponent<MeshRenderer>().material);
-                    hit.collider.gameObject.GetComponent<MeshRenderer>().material = blueTransparentMat;
-                }
-                else if (hit.collider.gameObject.GetComponent<MeshRenderer>().material.color == greenMat.color)
-                {
-                    raycastResults.Add(hit.collider.gameObject);
-                    raycastResultMaterials.Add(hit.collider.gameObject.GetComponent<MeshRenderer>().material);
-                    hit.collider.gameObject.GetComponent<MeshRenderer>().material = greenTransparentMat;
-                    
-                }
-                else if (hit.collider.gameObject.GetComponent<MeshRenderer>().material.color == greyMat.color)
-                {
-                    raycastResults.Add(hit.collider.gameObject);
-                    raycastResultMaterials.Add(hit.collider.gameObject.GetComponent<MeshRenderer>().material);
-                    hit.collider.gameObject.GetComponent<MeshRenderer>().material = greyTransparentMat;
-                }
-                else if (hit.collider.gameObject.GetComponent<MeshRenderer>().material.color == orangeMat.color)
-                {
-                    raycastResults.Add(hit.collider.gameObject);
-                    raycastResultMaterials.Add(hit.collider.gameObject.GetComponent<MeshRenderer>().material);
-                    hit.collider.gameObject.GetComponent<MeshRenderer>().material = orangeTransparentMat;
-                }
-                else if (hit.collider.gameObject.GetComponent<MeshRenderer>().material.color == redMat.color)
-                {
-                    raycastResults.Add(hit.collider.gameObject);
-                    raycastResultMaterials.Add(hit.collider.gameObject.GetComponent<MeshRenderer>().material);
-                    hit.collider.gameObject.GetComponent<MeshRenderer>().material = redTransparentMat;
-                }
-                else if (hit.collider.gameObject.GetComponent<MeshRenderer>().material.color == pinkMat.color)
-                {
-                    raycastResults.Add(hit.collider.gameObject);
-                    raycastResultMaterials.Add(hit.collider.gameObject.GetComponent<MeshRenderer>().material);
-                    hit.collider.gameObject.GetComponent<MeshRenderer>().material = pinkTransparentMat;
+
+                    if (hit.collider.gameObject.GetComponent<MeshRenderer>().material.color == blueMat.color)
+                    {
+                        raycastResults.Add(hit.collider.gameObject);
+                        raycastResultMaterials.Add(hit.collider.gameObject.GetComponent<MeshRenderer>().material);
+                        hit.collider.gameObject.GetComponent<MeshRenderer>().material = blueTransparentMat;
+                    }
+                    else if (hit.collider.gameObject.GetComponent<MeshRenderer>().material.color == greenMat.color)
+                    {
+                        raycastResults.Add(hit.collider.gameObject);
+                        raycastResultMaterials.Add(hit.collider.gameObject.GetComponent<MeshRenderer>().material);
+                        hit.collider.gameObject.GetComponent<MeshRenderer>().material = greenTransparentMat;
+
+                    }
+                    else if (hit.collider.gameObject.GetComponent<MeshRenderer>().material.color == greyMat.color)
+                    {
+                        raycastResults.Add(hit.collider.gameObject);
+                        raycastResultMaterials.Add(hit.collider.gameObject.GetComponent<MeshRenderer>().material);
+                        hit.collider.gameObject.GetComponent<MeshRenderer>().material = greyTransparentMat;
+                    }
+                    else if (hit.collider.gameObject.GetComponent<MeshRenderer>().material.color == orangeMat.color)
+                    {
+                        raycastResults.Add(hit.collider.gameObject);
+                        raycastResultMaterials.Add(hit.collider.gameObject.GetComponent<MeshRenderer>().material);
+                        hit.collider.gameObject.GetComponent<MeshRenderer>().material = orangeTransparentMat;
+                    }
+                    else if (hit.collider.gameObject.GetComponent<MeshRenderer>().material.color == redMat.color)
+                    {
+                        raycastResults.Add(hit.collider.gameObject);
+                        raycastResultMaterials.Add(hit.collider.gameObject.GetComponent<MeshRenderer>().material);
+                        hit.collider.gameObject.GetComponent<MeshRenderer>().material = redTransparentMat;
+                    }
+                    else if (hit.collider.gameObject.GetComponent<MeshRenderer>().material.color == pinkMat.color)
+                    {
+                        raycastResults.Add(hit.collider.gameObject);
+                        raycastResultMaterials.Add(hit.collider.gameObject.GetComponent<MeshRenderer>().material);
+                        hit.collider.gameObject.GetComponent<MeshRenderer>().material = pinkTransparentMat;
+                    }
                 }
             }
         }
