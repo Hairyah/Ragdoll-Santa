@@ -22,9 +22,11 @@ public class CharacterScript : MonoBehaviour
     [SerializeField] private Rigidbody centerMass;
     [SerializeField] private Rigidbody head;
 
+    public GameObject floatingText;
+
     private AudioManager _audioManager;
 
-    private bool hasTouchedNPC = false;
+    public bool hasTouchedNPC = false;
 
 
     private void Start()
@@ -142,9 +144,11 @@ public class CharacterScript : MonoBehaviour
         {
             Debug.Log("Qu'est-ce tu vas faire ? Écouter du Linkin Park ? 'Culé va !");
             hasTouchedNPC = true;
+            GameObject newFloatingText = Instantiate(floatingText, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), Quaternion.identity);
+            newFloatingText.transform.SetParent(transform);
+            newFloatingText.GetComponent<FloatingText>().Init("- 50 $");
             _gamemanagerScript.AddArgent(-50);
             _gamemanagerScript.SoftReset();
-            hasTouchedNPC = false;
         }
     }
 }

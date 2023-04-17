@@ -123,6 +123,8 @@ public class PathManager : MonoBehaviour
         transform.position = startingPos;
         transform.rotation = Quaternion.Euler(startingRot);
 
+        index = 0;
+
         switch (transform.name)
         {
             case "Man":

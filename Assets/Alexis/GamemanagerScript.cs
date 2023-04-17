@@ -15,6 +15,7 @@ public class GamemanagerScript : MonoBehaviour
 
     public GameObject resetMenu;
     public GameObject hud;
+    public GameObject looneyToon;
 
     public Text timeText;
     public Text moneyText;
@@ -74,12 +75,11 @@ public class GamemanagerScript : MonoBehaviour
     public void SoftReset()
     {
         timerIsRunning = false;
-        player.transform.position = playerStartingPos;
-        player.transform.rotation = Quaternion.Euler(playerStartingRot);
         man.GetComponent<PathManager>().Init();
         woman.GetComponent<PathManager>().Init();
-        
-        timerIsRunning = true;
+        player.GetComponent<CharacterScript>().enabled = false;
+        looneyToon.GetComponent<Animator>().SetBool("hasBeenTouched", true);
+        StartCoroutine(LooneyToon());
     }
 
     public void HardReset()
@@ -104,5 +104,17 @@ public class GamemanagerScript : MonoBehaviour
         Destroy(player);
         resetMenu.SetActive(true);
         hud.SetActive(false);
+    }
+
+    IEnumerator LooneyToon()
+    {
+        yield return new WaitForSeconds(1);
+        looneyToon.GetComponent<Animator>().SetBool("hasBeenTouched", false);
+        player.transform.position = playerStartingPos;
+        player.transform.rotation = Quaternion.Euler(playerStartingRot);
+        yield return new WaitForSeconds(1);
+        timerIsRunning = true;
+        player.GetComponent<CharacterScript>().enabled = true;
+        player.GetComponent<CharacterScript>().hasTouchedNPC = false;
     }
 }
