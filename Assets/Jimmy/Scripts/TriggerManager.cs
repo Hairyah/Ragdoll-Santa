@@ -23,8 +23,6 @@ public class TriggerManager : MonoBehaviour
         {
             if (!pathManager.hasSpotted)
             {
-                /*GameObject newFloatingText = Instantiate(floatingText, man.transform);
-                newFloatingText.transform.position = new Vector3(man.transform.position.x, man.transform.position.y + 2, man.transform.position.z);*/
                 GameObject newFloatingText = Instantiate(floatingText, new Vector3(man.transform.position.x, man.transform.position.y + 2, man.transform.position.z), Quaternion.identity);
                 newFloatingText.transform.SetParent(man.transform);
                 newFloatingText.GetComponent<FloatingText>().Init("jhf");
@@ -33,18 +31,15 @@ public class TriggerManager : MonoBehaviour
             pathManager.hasSpotted = true;
             pathManager.hasBeenChase = true;
             pathManager.navMeshAgent.speed = runningSpeed;
-            Debug.Log(transform.parent.name + " Trigger Enter");
         }
     }
     
     private void OnTriggerExit(Collider other)
     {
-        //Debug.Log(other.gameObject.name);
         if (other.gameObject.tag == "Player" && transform.gameObject.tag == "TriggerExit")
         {
             pathManager.hasSpotted = false;
             pathManager.navMeshAgent.speed = walkingSpeed;
-            Debug.Log(transform.parent.name + " Trigger Exit");
         }
     }
 }

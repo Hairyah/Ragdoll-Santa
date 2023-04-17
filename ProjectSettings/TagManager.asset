@@ -5,11 +5,17 @@ TagManager:
   serializedVersion: 2
   tags:
   - Objet
+  - NPC
+  - TriggerEnter
+  - TriggerExit
+  - Particles
+  - SphereMask
+  - Wall
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Walls
   - Water
   - UI
   - Character
